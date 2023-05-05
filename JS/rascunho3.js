@@ -5,10 +5,10 @@ let data = {
     transactions: []
 
 };
-
 document.getElementById("button-logout").addEventListener("click", logout);
 
 ///Adicionar Lançamento
+
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -25,6 +25,10 @@ document.getElementById("transaction-form").addEventListener("submit", function(
     e.target.reset();
     myModal.hide();
 
+    getCashIn();
+    getCashOut();
+    getTotal();
+
     alert("Lançamento adicionado com sucesso.");
 
 });
@@ -33,7 +37,7 @@ checkLogged();
 
 function checkLogged() {
     if(session) {
-        sessionStorage.setItem("logged", session);
+        sessionStorage.setItem("logeed", session);
         logged = session;
     }
 
@@ -45,18 +49,46 @@ function checkLogged() {
     const dataUser = localStorage.getItem(logged);
     if(dataUser) {
         data = JSON.parse(dataUser);
-        }
+    }
 
-        console.log(data);
-    };
+    getCashIn();
+    getCashOut();
+    getCashTotal();
+}
 
 function logout() {
     sessionStorage.removeItem("logged");
     localStorage.removeItem("session");
 
     window.location.href = "index.html";
-};
+}
+
+function getCashIn() {
+    const transactions = data.transactions;
+
+    const cashIn = transactions.filter((item) => item.type === "1");
+    
+    if(cashIn.length) {
+        let cashInHtml = ``;
+        let limit = 0;
+
+        if(cashIn.length > 5) {
+            limit = 5;
+        } else {
+            limit = cashIn.length;
+        }
+
+        for (let index = 0; index < array.limit; index++) {
+            console.log(index);
+            console.log(cashIn[index]);
+            
+        }
+
+    }
+
+    
+} 
 
 function saveData(data) {
     localStorage.setItem(data.login, JSON.stringify(data));
-};
+}

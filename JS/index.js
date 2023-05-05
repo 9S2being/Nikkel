@@ -1,4 +1,8 @@
-const myModal = new bootstrap.Modal("#Register-Modal");
+const myModal = new bootstrap.Modal("#register-modal");
+let logged = sessionStorage.getItem("logged");
+const session = localStorage.getItem("session");
+
+checkLogged();
 
 //LOGART NO SISTEMA
 document.getElementById("Login-form").addEventListener("submit", function (e) {
@@ -15,17 +19,16 @@ document.getElementById("Login-form").addEventListener("submit", function (e) {
         return;
     }
 
-    if (!account) {
+    if (account) {
         if (account.password !== password) {
-            alert("Opps! Verifique o usuário ou a senha")
+            alert("Opps! Verifique o usuário ou a senha");
             return;
         }
-    }
 
-
+        saveSession(email, saveSession)
+    
     window.location.href = "home.html";
-
-
+    }
 
 });
 
@@ -59,15 +62,16 @@ document.getElementById("create-form").addEventListener("submit", function (e) {
 });
 function checkLogged() {
     if (session) {
-        sessionStorage.setItem("logged, session");
+        sessionStorage.setItem("logged", session);
         logged = session;
     }
 
     if (logged) {
         saveSession(logged, session);
+
+        window.location.href = "home.html";
     }
 
-    window.location.href = "home.html";
 }
 
 
@@ -79,6 +83,8 @@ function saveSession(data, saveSession) {
     if (saveSession) {
         localStorage.setItem("session", data);
     }
+
+    sessionStorage.setItem("logged", data);
 }
 
 function getAccount(key) {

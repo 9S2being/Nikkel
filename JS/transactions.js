@@ -4,12 +4,15 @@ const session = localStorage.getItem("session");
 
 let data = {
     transactions: []
+
 };
 
 document.getElementById("button-logout").addEventListener("click", logout);
 
-//ADICIONAR LANÇAMENTO
-document.getElementById("transaction-form").addEventListener("submit", function (e) {
+
+///Adicionar Lançamento
+
+document.getElementById("transaction-modal").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const value = parseFloat(document.getElementById("value-input").value);
@@ -20,13 +23,14 @@ document.getElementById("transaction-form").addEventListener("submit", function 
     data.transactions.unshift({
         value: value, type: type, description: description, date: date
     });
+
     saveData(data);
-    e.target.removeEventListener();
+    e.target.reset();
     myModal.hide();
 
     getTransactions();
 
-    alert("lançamentoadcionadocom sucesso")
+    alert("Lançamento adicionado com sucesso.");
 
 });
 
@@ -34,12 +38,12 @@ checkLogged();
 
 function checkLogged() {
     if (session) {
-        sessionStorage.setItem("logged, session");
+        sessionStorage.setItem("logeed", session);
         logged = session;
     }
 
     if (!logged) {
-        window.localStorage = "index.html"
+        window.location.href = "index.html";
         return;
     }
 
@@ -59,33 +63,32 @@ function logout() {
 }
 
 function getTransactions() {
-    const transaction = data.transactions;
-    let transactions = "";
+    const transactions = data.transactions;
+    let transactionsHtml = ``;
 
-    if (transactions.length) {
+    if (transactions, length) {
         transactions.forEach((item) => {
-            let type = "entrada";
+            let type = "Entrada";
 
             if (item.type === "2") {
-                type = "saída";
+                type = "Saída";
             }
 
-            transactionsHtml +=
-
-                <tr >
-                    <th scope="row">${item.date}</th>
-                    <td>${item.value.forEach(2)}</td>
-                    <td>${type}</td>
-                    <td>${item.description}</td>
-                </tr>    
-            }
-
-        )
+            transactionsHtml += `
+                <tr>
+                <th scope="row">${item.date}</th>>
+                <td>${item.value.toFixed(2)}</td>
+                <td>${type}</td>
+                <td>${item.description}</td>
+            </tr>
+            `
+        })
     }
-    document.getElementById("transactions-list").innerHTML = transactionsHtml;
-    transactionsHtml();
+
+    document.getElementById("transactions-list").innerHTML = transactionsHtml;  
 }
 
-function saveDAta(data) {
-    localStorage.setItem(data.login, JSON, Stringfy(data));
+function saveData(data) {
+    localStorage.setItem(data.login, JSON.stringify(data));
 }
+
