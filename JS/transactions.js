@@ -1,7 +1,6 @@
 const myModal = new bootstrap.Modal("#transaction-modal");
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
-
 let data = {
     transactions: []
 
@@ -11,8 +10,7 @@ document.getElementById("button-logout").addEventListener("click", logout);
 
 
 ///Adicionar Lançamento
-
-document.getElementById("transaction-modal").addEventListener("submit", function (e) {
+document.getElementById("transaction-form").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const value = parseFloat(document.getElementById("value-input").value);
@@ -38,7 +36,7 @@ checkLogged();
 
 function checkLogged() {
     if (session) {
-        sessionStorage.setItem("logeed", session);
+        sessionStorage.setItem("logged", session);
         logged = session;
     }
 
@@ -53,6 +51,7 @@ function checkLogged() {
     }
 
     getTransactions();
+
 }
 
 function logout() {
@@ -66,24 +65,24 @@ function getTransactions() {
     const transactions = data.transactions;
     let transactionsHtml = ``;
 
-    if (transactions, length) {
+    if (transactions.length) {
         transactions.forEach((item) => {
             let type = "Entrada";
 
-            if (item.type === "2") {
+            if(item.type === "2") {
                 type = "Saída";
             }
-
             transactionsHtml += `
-                <tr>
-                <th scope="row">${item.date}</th>>
+            <tr>
+                <th scope="row">${item.date}</th>
                 <td>${item.value.toFixed(2)}</td>
                 <td>${type}</td>
                 <td>${item.description}</td>
-            </tr>
+           </tr>
             `
         })
-    }
+    } 
+    
 
     document.getElementById("transactions-list").innerHTML = transactionsHtml;  
 }
